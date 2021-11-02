@@ -193,6 +193,8 @@ class App extends React.Component<any, any> {
       }
 
       const { chainId, accounts } = payload.params[0];
+      console.log("onSessionUpdate to chainId=", chainId)
+
       this.onSessionUpdate(accounts, chainId);
     });
 
@@ -218,6 +220,7 @@ class App extends React.Component<any, any> {
 
     if (connector.connected) {
       const { chainId, accounts } = connector;
+      console.log("Connected to chainId=", chainId)
       const address = accounts[0];
       this.setState({
         connected: true,
@@ -244,6 +247,7 @@ class App extends React.Component<any, any> {
   };
 
   public onConnect = async (payload: IInternalEvent) => {
+    console.log("params=", payload.params)
     const { chainId, accounts } = payload.params[0];
     const address = accounts[0];
     await this.setState({
@@ -252,6 +256,7 @@ class App extends React.Component<any, any> {
       accounts,
       address,
     });
+    console.log("onConnect chainId=", chainId)
     this.getAccountAssets();
   };
 
@@ -304,7 +309,7 @@ class App extends React.Component<any, any> {
     const gasPrice = sanitizeHex(convertStringToHex(convertAmountToRawNumber(_gasPrice, 9)));
 
     // gasLimit
-    const _gasLimit = 21000;
+    const _gasLimit = 51000;
     const gasLimit = sanitizeHex(convertStringToHex(_gasLimit));
 
     // value
@@ -325,6 +330,7 @@ class App extends React.Component<any, any> {
       data,
     };
 
+    console.log("sending", tx)
     try {
       // open modal
       this.toggleModal();
@@ -334,14 +340,14 @@ class App extends React.Component<any, any> {
 
       // send transaction
       const result = await connector.sendTransaction(tx);
-
+      console.log("approved?", result)
       // format displayed result
       const formattedResult = {
         method: "eth_sendTransaction",
         txHash: result,
         from: address,
         to: address,
-        value: "0 ETH",
+        value: "0 ONE",
       };
 
       // display result

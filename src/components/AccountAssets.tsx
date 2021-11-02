@@ -16,8 +16,8 @@ const AccountAssets = (props: any) => {
         }
       : {
           contractAddress: "",
-          name: "Ethereum",
-          symbol: "ETH",
+          name: "Harmony",
+          symbol: "ONE",
           decimals: "18",
           balance: "0",
         };
